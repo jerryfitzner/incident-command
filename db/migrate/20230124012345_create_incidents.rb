@@ -3,8 +3,7 @@ class CreateIncidents < ActiveRecord::Migration[7.0]
     create_table :incidents do |t|
       t.string :type
       t.string :severity
-      t.integer :emergency_vehicle_id 
-      t.integer :user_id
+
 
       t.timestamps
     end
