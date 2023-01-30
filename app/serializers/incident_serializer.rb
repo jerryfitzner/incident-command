@@ -1,3 +1,3 @@
 class IncidentSerializer < ActiveModel::Serializer
-  attributes :id, :type, :severity
+  attributes :id, :name, :severity
 end
