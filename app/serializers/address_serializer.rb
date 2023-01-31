@@ -1,4 +1,4 @@
 class AddressSerializer < ActiveModel::Serializer
   attributes :id, :address, :city, :state, :zip
-  has_one :incident
+  belongs_to :incident
 end

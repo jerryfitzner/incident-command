@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :must_login, only: [ create ]
+  skip_before_action :must_login, only: [ :create ]
   before_action :set_user, only: %i[ show update destroy ]
 
   # GET /users

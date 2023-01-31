@@ -1,4 +1,4 @@
 class EmergencyVehicleSerializer < ActiveModel::Serializer
   attributes :id, :agency, :status, :crew_size, :active, :call_sign
-  has_one :incident
+  belongs_to :incident
 end
