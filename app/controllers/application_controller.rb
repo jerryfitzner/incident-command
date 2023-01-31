@@ -1,9 +1,29 @@
 class ApplicationController < ActionController::API
   include ActionController::Cookies
 
-  def hello_world
-    # binding.pry
-    session[:count] = (session[:count] || 0) + 1
-    render json: { count: session[:count] }
+  # def hello_world
+  #   # binding.pry
+  #   session[:count] = (session[:count] || 0) + 1
+  #   render json: { count: session[:count] }
+  # end
+
+  before_action :must_login
+
+  def must_login
+    render json: { message: "Please sign in to your account" } unless signed_in?
+  end
+
+  def current_user
+    current_user = User.find_by(id: session[:user_id]) if signed_in?
+  end
+
+  def admin
+    current_user.admin 
+  end
+
+  private
+
+  def signed_in?
+    !!session[:user_id]
   end
 end

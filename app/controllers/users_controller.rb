@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :must_login, only: [ create ]
   before_action :set_user, only: %i[ show update destroy ]
 
   # GET /users
@@ -26,10 +27,14 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    if @user.update(user_params)
-      render json: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
+    if admin
+      if @user.update(user_params)
+        render json: @user
+      else
+        render json: @user.errors, status: :unprocessable_entity
+      end
+    else 
+      render json: { error: "You must be an admin to change the status of another user" }, status: :unathorized
     end
   end
 
@@ -47,5 +52,9 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:username, :password_digest, :name, :position, :agency, :admin)
+    end
+
+    def nonadmin_user_params
+      params.require(:user).permit(:username, :password_digest, :name, :position, :agency)
     end
 end
