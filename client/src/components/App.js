@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [userName, setUserName] = useState(""); 
+  const [password, setPassword] = useState("");
 
   // const dispatch = useDispatch();
 
@@ -20,8 +22,28 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Page Count: {count}</h1>
-      <h1>Hello</h1>
+      <h1>Incident Command</h1>
+      <div className="row">
+        <form className="col s12">
+          <div className="row">
+            <div className="input-field col s6">
+              <input placeholder="Placeholder" id="first_name" type="text" className="validate" value={ userName } onChange={ e => setUserName(e.target.value) }/>
+              {/* <label >First Name</label> */}
+            </div>
+          </div>
+          <div className="row">
+            <div className="input-field col s6">
+              <input placeholder="Placeholder" id="first_name" type="text" className="validate" value={ password } onChange={ e => setPassword(e.target.value) }/>
+              {/* <label >First Name</label> */}
+            </div>
+          </div>
+          <button className="btn waves-effect waves-light" type="submit" name="action">Submit
+            <i className="material-icons right">send</i>
+          </button>
+        </form>
+      </div>
+
+
     </div>
   );
 }

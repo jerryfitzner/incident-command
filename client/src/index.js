@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import { BrowserRouter } from 'react-router-dom';
+import 'materialize-css/dist/css/materialize.min.css';
 import thunk from 'redux-thunk';
 // import './index.css';
 import App from './components/App';
@@ -11,15 +12,15 @@ import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import rootReducer from './reducers';
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+// const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider store={ store }>
+      {/* <Provider store={ store }> */}
         <App />
-      </Provider>
+      {/* </Provider> */}
     </BrowserRouter>
   </React.StrictMode>
 );
