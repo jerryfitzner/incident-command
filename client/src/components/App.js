@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Navbar from "./Navbar";
 // import { deleteUser } from "../actions/user";
 // import { useDispatch } from "react-redux";
 // import { Route, Routes } from 'react-router-dom';
@@ -17,14 +18,23 @@ function App() {
   //     .then((data) => dispatch({}));
   // }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+  }
+
   
   
 
   return (
+    <>
+    <div>
+      <Navbar />
+    </div>
     <div className="App">
       <h1>Incident Command</h1>
       <div className="row">
-        <form className="col s12">
+        <form className="col s12" onSubmit={ handleSubmit }>
           <div className="row">
             <div className="input-field col s6">
               <input placeholder="Placeholder" id="first_name" type="text" className="validate" value={ userName } onChange={ e => setUserName(e.target.value) }/>
@@ -37,14 +47,13 @@ function App() {
               {/* <label >First Name</label> */}
             </div>
           </div>
-          <button className="btn waves-effect waves-light" type="submit" name="action">Submit
+          <button className="btn waves-effect waves-light" type="submit" name="submit">Submit
             <i className="material-icons right">send</i>
           </button>
         </form>
       </div>
-
-
     </div>
+    </>
   );
 }
 
