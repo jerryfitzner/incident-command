@@ -20,7 +20,27 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
+    console.log(userName, password);
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        username: userName, 
+        password: password
+      }),
+    }).then((r) => {
+      if(r.ok){
+        r.json().then((user) => {
+          console.log(user);
+          setUserName('');
+          setPassword('');
+        })
+      }else{
+        r.json().then(error => console.log(error))
+      }
+    });
   }
 
   
