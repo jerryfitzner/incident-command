@@ -1,7 +1,8 @@
 class SessionsController < ApplicationController
-  skip_before_action :must_login, only: [ create ]
+  skip_before_action :must_login, only: [ :create ]
 
   def create
+    binding.pry
     user = user.find_by(username: params[:username])
 
     if user&.authenticate(params[:password])
