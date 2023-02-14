@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 // import { deleteUser } from "../actions/user";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addUser } from "../actions/user";
 // import { Route, Routes } from 'react-router-dom';
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function App() {
   const [count, setCount] = useState(0);
   const [userName, setUserName] = useState(""); 
   const [password, setPassword] = useState("");
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const user = useSelector((store) => console.log(store.user))
 
   // useEffect(() => {
   //   fetch("/hello")
@@ -20,7 +22,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userName, password);
+    // console.log(userName, password);
     fetch('/login', {
       method: 'POST',
       headers: {
@@ -33,7 +35,7 @@ function App() {
     }).then((r) => {
       if(r.ok){
         r.json().then((user) => {
-          console.log(user);
+          dispatch(addUser(user));
           setUserName('');
           setPassword('');
         })
