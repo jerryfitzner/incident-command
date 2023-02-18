@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  skip_before_action :must_login, only: [ :create, :index ]
-  before_action :set_user, only: %i[ show update destroy ]
+  skip_before_action :must_login, only: [ :create, :index, :show ]
+  # before_action :set_user, only: %i[ show update destroy ]
+  before_action :authorized, only: [ :show ]
 
   # GET /users
   def index
@@ -11,7 +12,9 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render json: @user
+    # binding.pry
+    user = User.find_by(id: session[:user_id])
+    render json: user, status: 200
   end
 
   # POST /users
@@ -34,7 +37,7 @@ class UsersController < ApplicationController
         render json: @user.errors, status: :unprocessable_entity
       end
     else 
-      render json: { error: "You must be an admin to change the status of another user" }, status: :unathorized
+      render json: { error: "You must be an admin to change the status of another user" }, status: :unauthorized
     end
   end
 
@@ -45,9 +48,9 @@ class UsersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+    # def set_user
+    #   @user = User.find(params[:id])
+    # end
 
     # Only allow a list of trusted parameters through.
     def user_params
@@ -56,5 +59,10 @@ class UsersController < ApplicationController
 
     def nonadmin_user_params
       params.require(:user).permit(:username, :password_digest, :name, :position, :agency)
+    end
+
+    #Make sure user is authorized
+    def authorized
+      return render json: { error: "Unauthorized User" }, status: :unauthorized unless session.include? :user_id
     end
 end
