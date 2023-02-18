@@ -6,7 +6,9 @@ const userReducer = (state=initialState, action) => {
       return [action.payload]
     case "DELETE_USER":
       // debugger;
-      return state.filter(user => user.name !== action.payload.name);
+      state = initialState;
+      return state
+      // .filter(user => user.name !== action.payload.name);
     default:
       return state;
   }

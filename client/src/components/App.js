@@ -1,80 +1,51 @@
-import { useState, useEffect } from "react";
-import Navbar from "./Navbar";
-// import { deleteUser } from "../actions/user";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 import { addUser } from "../actions/user";
-// import { Route, Routes } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import Navbar from "./Navbar";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import Login from "./Login";
+import Home from "./Home";
+import Signup from "./Signup";
+import About from "./About";
+import Users from "./Users";
+import Resources from "./Resources";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [userName, setUserName] = useState(""); 
-  const [password, setPassword] = useState("");
-
   const dispatch = useDispatch();
-  const user = useSelector((store) => console.log(store.user))
+  const user = useSelector((store) => (store.user));
 
-  // useEffect(() => {
-  //   fetch("/hello")
-  //     .then((r) => r.json())
-  //     .then((data) => dispatch({}));
-  // }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // console.log(userName, password);
-    fetch('/login', {
-      method: 'POST',
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        username: userName, 
-        password: password
-      }),
-    }).then((r) => {
+  useEffect(() => {
+    fetch('/me').then((r) => {
       if(r.ok){
-        r.json().then((user) => {
-          dispatch(addUser(user));
-          setUserName('');
-          setPassword('');
-        })
-      }else{
-        r.json().then(error => console.log(error))
+        r.json().then(user => dispatch(addUser(user)))
       }
     });
-  }
+  }, []);
 
-  
-  
+  user ? console.log(user) : console.log("Logged Out");
 
   return (
     <>
-    <div>
-      <Navbar />
-    </div>
-    <div className="App">
-      <h1>Incident Command</h1>
-      <div className="row">
-        <form className="col s12" onSubmit={ handleSubmit }>
-          <div className="row">
-            <div className="input-field col s6">
-              <input placeholder="Placeholder" id="first_name" type="text" className="validate" value={ userName } onChange={ e => setUserName(e.target.value) }/>
-              {/* <label >First Name</label> */}
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s6">
-              <input placeholder="Placeholder" id="first_name" type="text" className="validate" value={ password } onChange={ e => setPassword(e.target.value) }/>
-              {/* <label >First Name</label> */}
-            </div>
-          </div>
-          <button className="btn waves-effect waves-light" type="submit" name="submit">Submit
-            <i className="material-icons right">send</i>
-          </button>
-        </form>
+      <div>
+        <Navbar />
       </div>
-    </div>
+      <div>
+        {user ? (
+          <Routes>
+            <Route path="/" element={ <Home/> } />
+            <Route path="/users" element={ <Users/> } />
+            <Route path="/resources" element={ <Resources/> } />
+            <Route path="*" element={ <Home/> } />
+          </Routes>
+        ):(
+          <Routes>
+            <Route path="/about" element={ <About/> } />
+            <Route path="/" element={ <Login/> } />
+            <Route path="/signup" element={ <Signup/> } />
+            <Route path="*" element={ <Login/> } />
+          </Routes>
+        )}
+      </div>
     </>
   );
 }
