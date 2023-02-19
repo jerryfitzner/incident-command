@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   get '/me', to: 'users#show'
+  get '/agency-names', to: 'agencies#only_agency_names'
 
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'

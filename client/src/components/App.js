@@ -7,7 +7,7 @@ import Login from "./Login";
 import Home from "./Home";
 import Signup from "./Signup";
 import About from "./About";
-import Users from "./Users";
+import Users from "./Users/Users";
 import Resources from "./Resources";
 
 function App() {
@@ -22,18 +22,18 @@ function App() {
     });
   }, []);
 
-  user ? console.log(user) : console.log("Logged Out");
+  // user ? console.log(user) : console.log("Logged Out");
 
   return (
     <>
       <div>
         <Navbar />
       </div>
-      <div>
+      <div className="container">
         {user ? (
           <Routes>
             <Route path="/" element={ <Home/> } />
-            <Route path="/users" element={ <Users/> } />
+            <Route path="/personnel" element={ <Users/> } />
             <Route path="/resources" element={ <Resources/> } />
             <Route path="*" element={ <Home/> } />
           </Routes>

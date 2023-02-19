@@ -36,7 +36,7 @@ const Login = () => {
   }
 
   return (
-      <div className="App">
+    <div className="App">
       <h1>Incident Command</h1>
       <div className="row">
         <form className="col s12" onSubmit={ handleSubmit }>

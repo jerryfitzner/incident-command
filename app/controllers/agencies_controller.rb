@@ -1,11 +1,18 @@
 class AgenciesController < ApplicationController
   before_action :set_agency, only: %i[ show update destroy ]
+  skip_before_action :must_login, only: [:only_agency_names]
 
   # GET /agencies
   def index
     @agencies = Agency.all
 
     render json: @agencies
+  end
+
+  # To Avoid providing data to user who has not signed up
+  def only_agency_names
+    agencie_names = Agency.all
+    render json: agencie_names, include: [:name, :id]
   end
 
   # GET /agencies/1

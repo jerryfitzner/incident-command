@@ -28,7 +28,7 @@ const Navbar = () => {
           {user ? (
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/users">Users</NavLink></li>
+            <li><NavLink to="/personnel">Personnel</NavLink></li>
             <li><NavLink to="/resources">Resources</NavLink></li>
             <li><NavLink to="/signin" onClick={handleLogout}>Logout</NavLink></li>
           </ul>
