@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadPersonnel } from "../../actions/personnel";
-import FirePersonnel from "./FirePersonnel";
-import MedicalPersonnel from "./MedicalPersonnel";
-import PolicePersonnel from "./PolicePersonnel";
-import OtherPersonnel from "./OtherPersonnel";
+import { loadResources } from "../../actions/resource";
+import PoliceResources from "./PoliceResources";
+import MedicalResources from "./MedicalResources";
+import OtherResources from "./OtherResources";
+import FireResources from "./FireResources";
 
-const Users = () => {
+
+const Resources = () => {
   const [ fire, setFire ] = useState([]);
   const [ medical, setMedical ] = useState([]);
   const [ police, setPolice ] = useState([]);
@@ -14,32 +15,32 @@ const Users = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadPersonnel())
+    dispatch(loadResources())
   }, []);
 
-  const personnel = useSelector((store) => store.personnel);
+  const resources = useSelector((store) => store.resources);
 
   useEffect(() => {
-    const firePersonnel = [];
-    const policePersonnel = [];
-    const medicalPersonnel = [];
-    const otherPersonnel = [];
-    personnel.map((person) => {
-      if(person.agency.emergency_service === 'Fire'){
-        firePersonnel.push(person);
-      }else if(person.agency.emergency_service === 'Medical'){
-        medicalPersonnel.push(person);
-      }else if(person.agency.emergency_service === 'Police'){
-        policePersonnel.push(person);
+    const fireResources = [];
+    const policeResources = [];
+    const medicalResources = [];
+    const otherResources = [];
+    resources.map((resource) => {
+      if(resource.agency.emergency_service === 'Fire'){
+        fireResources.push(resource);
+      }else if(resource.agency.emergency_service === 'Medical'){
+        medicalResources.push(resource);
+      }else if(resource.agency.emergency_service === 'Police'){
+        policeResources.push(resource);
       }else{
-        otherPersonnel.push(person);
+        otherResources.push(resource);
       }
     });
-    setFire(firePersonnel);
-    setPolice(policePersonnel);
-    setMedical(medicalPersonnel);
-    setOther(otherPersonnel);
-  }, [personnel]) 
+    setFire(fireResources);
+    setPolice(policeResources);
+    setMedical(medicalResources);
+    setOther(otherResources);
+  }, [resources]) 
 
   
 
@@ -62,7 +63,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {fire.map((firePerson) => <FirePersonnel key={firePerson.id} firePerson={ firePerson }/>)}
+            {fire.map((firePerson) => <FireResources key={firePerson.id} firePerson={ firePerson }/>)}
           </tbody>
         </table>
       </div>
@@ -81,7 +82,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {medical.map((medPerson) => <MedicalPersonnel key={medPerson.id} medicalPerson={ medPerson }/>)}
+            {medical.map((medResource) => <MedicalResources key={medResource.id} medicalResource={ medResource }/>)}
           </tbody>
         </table>
       </div>
@@ -100,14 +101,14 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {police.map((policePerson) => <PolicePersonnel key={policePerson.id} policePerson={ policePerson }/>)}
+            {police.map((policeResources) => <PoliceResources key={policeResources.id} policeResources={ policeResources }/>)}
           </tbody>
         </table>
       </div>
     </div>
     <div className="card">
       <div>
-        <h5>⚝ Other Personnel</h5>
+        <h5>⚝ Other Resources</h5>
         <table className="centered">
           <thead>
             <tr>
@@ -119,7 +120,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {other.map((otherPerson) => <OtherPersonnel key={otherPerson.id} otherPerson={ otherPerson }/>)}
+            {other.map((otherResources) => <OtherResources key={otherResources.id} otherResources={ otherResources }/>)}
           </tbody>
         </table>
       </div>
@@ -128,4 +129,4 @@ const Users = () => {
   )
 };
 
-export default Users;
+export default Resources;

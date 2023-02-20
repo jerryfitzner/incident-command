@@ -8,7 +8,7 @@ import Home from "./Home";
 import Signup from "./Signup";
 import About from "./About";
 import Users from "./Users/Users";
-import Resources from "./Resources";
+import Resources from "./Units/Resources";
 
 function App() {
   const dispatch = useDispatch();
