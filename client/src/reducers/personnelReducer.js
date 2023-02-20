@@ -12,7 +12,7 @@ const personnelReducer = (state=initialState, action) => {
           return person
         }
       })
-      return {...state, updatedPersonnel }
+      return updatedPersonnel 
     default:
       return state;
   }

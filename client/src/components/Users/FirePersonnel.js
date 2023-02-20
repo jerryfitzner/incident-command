@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updatePersonnel } from "../../actions/personnel";
 
@@ -6,24 +6,6 @@ const FirePersonnel = ({ firePerson }) => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if(user[0].admin === true){
-
-  //   }
-  // }, [])
-  
-
-  // const tableRows = firePersonnel.map((firePerson) => {
-    
-  //   return(
-  //     <tr key={firePersonnel.id}>
-  //       <td>{firePerson.name}</td>
-  //       <td>{firePerson.agency.name}</td>
-  //       <td>{firePerson.position}</td>
-  //       <td>{user[0].admin ? <button></button> : }</td>
-  //     </tr>
-  //   )
-  // })
   const adminClick = () => {
     fetch(`/users/${firePerson.id}`, {
       method: 'PATCH',
@@ -31,11 +13,11 @@ const FirePersonnel = ({ firePerson }) => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ "admin": !firePerson.admin })
+      body: JSON.stringify({ "admin" : !firePerson.admin })
     })
     .then((r) => {
       if(r.ok){
-        r.json().then((person) => {dispatch(updatePersonnel(person))})
+        r.json().then((person) => dispatch(updatePersonnel(person)))
       } else (
         r.json().then((error) => {console.log(error.error)})
       )

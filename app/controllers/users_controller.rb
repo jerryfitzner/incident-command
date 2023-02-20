@@ -30,11 +30,14 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    if admin
-      if @user.update(user_params)
-        render json: @user
+    user = User.find_by(id: params[:id])
+    # binding.pry
+
+    if admin?
+      if user.update(user_params)
+        render json: user
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: user.errors, status: :unprocessable_entity
       end
     else 
       render json: { error: "You must be an admin to change the status of another user" }, status: :unauthorized
@@ -65,4 +68,5 @@ class UsersController < ApplicationController
     def authorized
       return render json: { error: "Unauthorized User" }, status: :unauthorized unless session.include? :user_id
     end
+    
 end
