@@ -1,6 +1,4 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Units from "./Units";
 
 
@@ -9,10 +7,16 @@ import Units from "./Units";
 const IncidentCard = ({ incident, availUnits }) => {
   const { address, city, state, zip } = incident.address; 
   const [toggleAddUnit, setToggleAddUnit] = useState(false);
+  const [assignUnit, setAssignUnit] = useState();
+
+  const handleUnitAssign = (e) => {
+    e.preventDefault();
+    console.log(e)
+    // fetch(`/emergency_vehciles/${e.target.id}`)
+  }
   
   
   const availUnitsOptions = availUnits.map((unit) => {
-      console.log(unit)
       return(
         <option id={unit.id} key={unit.id}>{unit.call_sign} - {unit.agency.emergency_service}</option>
       )
@@ -45,10 +49,13 @@ const IncidentCard = ({ incident, availUnits }) => {
           {toggleAddUnit ? (
             <div className="input-field">
               <h5>Available</h5>
+              <form>
               <select className="browser-default" defaultValue="Select Available Unit">
                 <option disabled>Select Available Unit</option>
                 {availUnitsOptions}
               </select>
+              <button className="btn-small" onSubmit={handleUnitAssign}>Assign Unit</button>
+              </form>
             </div>
           ):(
             <></>
