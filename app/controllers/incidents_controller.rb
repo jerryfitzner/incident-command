@@ -15,6 +15,8 @@ class IncidentsController < ApplicationController
 
   # POST /incidents
   def create
+    binding.pry
+    address = Address.create(address_params)
     @incident = Incident.new(incident_params)
 
     if @incident.save
@@ -47,5 +49,9 @@ class IncidentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def incident_params
       params.require(:incident).permit(:type, :severity)
+    end
+
+    def address_params
+      params.require(:address).permit(:incident_id, :address, :city, :state, :zip)
     end
 end

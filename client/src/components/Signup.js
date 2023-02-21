@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { addUser } from "../actions/user";
+import { useDispatch } from "react-redux";
 
 const beginningState = {
   name: '',
@@ -12,13 +14,31 @@ const beginningState = {
 const Signup = () => {
   const [signupForm, setSignupForm] = useState(beginningState);
   const [agencies, setAgencies] = useState([]);
+  
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setSignupForm({...signupForm, [e.target.id]: e.target.value})
   };
 
-  const handleSubmit = () => {
-    console.log("Submit")
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch('/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(signupForm)
+    })
+    .then((r) => {
+      if(r.ok){
+        r.json().then((user) => dispatch(addUser(user)))
+      }else{
+        r.json().then((error) => console.log(error))
+      }
+    })
+    console.log(signupForm)
   };
 
   useEffect(() => {
@@ -34,6 +54,10 @@ const Signup = () => {
         }
       })
   }, [])
+
+  const agencyList = () => agencies.map((agency) => {
+    return(<option id={agency.id} key={agency.id} value={agency.id}>{agency.name}</option>)
+  })
 
 
   return(
@@ -55,10 +79,9 @@ const Signup = () => {
           </div>
           <div className="row">
             <div className="input-field">
-              <select className="browser-default">
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+              <select id="agency_id" className="browser-default" defaultValue="Please Select an Agency" onChange={ handleChange }>
+                <option disabled>Please Select an Agency</option>
+                {agencyList()}
               </select>
             </div>
           </div>
