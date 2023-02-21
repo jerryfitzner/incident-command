@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Units from "./Units";
 
 
@@ -7,8 +8,22 @@ import Units from "./Units";
 
 const IncidentCard = ({ incident }) => {
   const { address, city, state, zip } = incident.address; 
+  const [toggleAddUnit, setToggleAddUnit] = useState(false);
   // const [tab, setTab] = useState(<Units/>);
-  
+
+
+  // const showUnits = () => {
+  //   {toggleAddUnit ? (
+  //     return(<></>)
+  //   ):(
+  //     return(<></>)
+  //   )}
+  // }
+  const units = useSelector((store) => store.resources);
+  const availableUnits = units.filter((resource) => resource.length < 6)
+
+  console.log(units)
+  // Need to call units from DB prior. Right now they are only getting called in resources page render. 
   
 
 
@@ -36,8 +51,22 @@ const IncidentCard = ({ incident }) => {
         <div className="card-content grey lighten-4">
           <Units units={incident.emergency_vehicles}/>
           {/* <Units units={incident.emergency_vehicles}/> */}
+          {toggleAddUnit ? (
+            <div className="input-field">
+              <select className="browser-default" defaultValue="Select Available Unit">
+                <option disabled>Select Available Unit</option>
+                <option name="High" value="High">High</option>
+                <option name="Medium" value="Medium">Medium</option>
+                <option name="Low" value="Low">Low</option>
+              </select>
+            </div>
+          ):(
+            <></>
+          )}
         </div>
-        <button className="btn centered">Assign Unit</button>
+        <div className="center">
+          <button className="btn" onClick={() => setToggleAddUnit(!toggleAddUnit)}>{toggleAddUnit ? 'Close' : 'Assign Unit'}</button>
+        </div>
       </div>
     </div>
   )
