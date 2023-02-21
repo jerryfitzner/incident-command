@@ -2,13 +2,15 @@ import React, { useEffect } from "react";
 import { loadIncidents } from "../actions/incidents";
 import { useDispatch } from "react-redux";
 import Incidents from "./Incidents/Incidents";
+import { loadResources } from "../actions/resource";
 
 const Home = () => {
   // const incidents = useSelector((store) => (store.incident));
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadIncidents())
+    dispatch(loadIncidents());
+    dispatch(loadResources())
   }, []);
 
   

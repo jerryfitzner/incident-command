@@ -13,11 +13,11 @@ const Resources = () => {
   const [ police, setPolice ] = useState([]);
   const [ other, setOther ] = useState([]);
   // const [ mod, setMod ] = useState();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(loadResources())
-  }, []);
+  // useEffect(() => {
+  //   dispatch(loadResources())
+  // }, []);
 
   const resources = useSelector((store) => store.resources);
 

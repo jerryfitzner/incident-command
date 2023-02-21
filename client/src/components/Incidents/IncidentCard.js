@@ -6,26 +6,17 @@ import Units from "./Units";
 
 
 
-const IncidentCard = ({ incident }) => {
+const IncidentCard = ({ incident, availUnits }) => {
   const { address, city, state, zip } = incident.address; 
   const [toggleAddUnit, setToggleAddUnit] = useState(false);
-  // const [tab, setTab] = useState(<Units/>);
-
-
-  // const showUnits = () => {
-  //   {toggleAddUnit ? (
-  //     return(<></>)
-  //   ):(
-  //     return(<></>)
-  //   )}
-  // }
-  const units = useSelector((store) => store.resources);
-  const availableUnits = units.filter((resource) => resource.length < 6)
-
-  console.log(units)
-  // Need to call units from DB prior. Right now they are only getting called in resources page render. 
   
-
+  
+  const availUnitsOptions = availUnits.map((unit) => {
+      console.log(unit)
+      return(
+        <option id={unit.id} key={unit.id}>{unit.call_sign} - {unit.agency.emergency_service}</option>
+      )
+    });
 
 
   return(
@@ -53,11 +44,10 @@ const IncidentCard = ({ incident }) => {
           {/* <Units units={incident.emergency_vehicles}/> */}
           {toggleAddUnit ? (
             <div className="input-field">
+              <h5>Available</h5>
               <select className="browser-default" defaultValue="Select Available Unit">
                 <option disabled>Select Available Unit</option>
-                <option name="High" value="High">High</option>
-                <option name="Medium" value="Medium">Medium</option>
-                <option name="Low" value="Low">Low</option>
+                {availUnitsOptions}
               </select>
             </div>
           ):(
