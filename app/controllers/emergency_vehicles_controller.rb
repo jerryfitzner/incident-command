@@ -26,10 +26,14 @@ class EmergencyVehiclesController < ApplicationController
 
   # PATCH/PUT /emergency_vehicles/1
   def update
-    if @emergency_vehicle.update(emergency_vehicle_params)
-      render json: @emergency_vehicle
+    if @emergency_vehicle.status == "Unassigned"
+      if @emergency_vehicle.update(emergency_vehicle_params)
+        render json: @emergency_vehicle
+      else
+        render json: @emergency_vehicle.errors, status: :unprocessable_entity
+      end
     else
-      render json: @emergency_vehicle.errors, status: :unprocessable_entity
+      render json: {error: "Emergency Vehicle Cannot Be Assigned to An Incident"}, status: 400
     end
   end
 

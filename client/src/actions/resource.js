@@ -8,7 +8,7 @@ export const loadResources = () => {
   }
 }
 
-export const updatePersonnel = (resource) => {
+export const updateResource = (resource) => {
   return {
     type: "UPDATE_RESOURCE", 
     payload: resource

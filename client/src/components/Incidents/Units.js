@@ -5,13 +5,13 @@ const Units = ({ units }) => {
   const unit = units.map((ev) => {
     const vehicleImage = () => {
       if(ev.agency.emergency_service === 'Fire'){
-        return('🚒')
+        return(`🚒  ${ev.agency.name}`)
       }else if(ev.agency.emergency_service === 'Medical'){
-        return ('🚑')
+        return (`🚑  ${ev.agency.name}`)
       }else if(ev.agency.emergency_service === 'Police'){
-        return ('🚓')
+        return (`🚓  ${ev.agency.name}`)
       }else{
-        return ('⚝')
+        return (`⚝  ${ev.agency.name}`)
       }
     };
 

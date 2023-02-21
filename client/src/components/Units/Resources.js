@@ -12,6 +12,7 @@ const Resources = () => {
   const [ medical, setMedical ] = useState([]);
   const [ police, setPolice ] = useState([]);
   const [ other, setOther ] = useState([]);
+  // const [ mod, setMod ] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,27 +44,24 @@ const Resources = () => {
   }, [resources]) 
 
   
-
-
-
   return(
   <div className="App center-align">
-    <h3>Personnel</h3>
+    {/* {mod} */}
+    <h3>Resources</h3>
     <div className="card">
       <div>
         <h5>🚒 Fire</h5>
         <table className="centered">
           <thead>
             <tr>
-              <th>Name</th>
               <th>Agency</th>
-              <th>Position</th>
-              <th>Admin</th>
+              <th>Unit #</th>
+              <th>Status</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {fire.map((firePerson) => <FireResources key={firePerson.id} firePerson={ firePerson }/>)}
+            {fire.map((fireResource) => <FireResources key={fireResource.id} fireResource={ fireResource }/>)}
           </tbody>
         </table>
       </div>
@@ -101,7 +99,7 @@ const Resources = () => {
             </tr>
           </thead>
           <tbody>
-            {police.map((policeResources) => <PoliceResources key={policeResources.id} policeResources={ policeResources }/>)}
+            {police.map((policeResource) => <PoliceResources key={policeResource.id} policeResource={ policeResource }/>)}
           </tbody>
         </table>
       </div>
@@ -120,7 +118,7 @@ const Resources = () => {
             </tr>
           </thead>
           <tbody>
-            {other.map((otherResources) => <OtherResources key={otherResources.id} otherResources={ otherResources }/>)}
+            {other.map((otherResource) => <OtherResources key={otherResource.id} otherResource={ otherResource }/>)}
           </tbody>
         </table>
       </div>
