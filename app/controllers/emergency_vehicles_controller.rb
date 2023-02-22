@@ -1,6 +1,8 @@
 class EmergencyVehiclesController < ApplicationController
   before_action :set_emergency_vehicle, only: %i[ show update destroy ]
 
+  skip_before_action :must_login, only: [:update]
+
   # GET /emergency_vehicles
   def index
     @emergency_vehicles = EmergencyVehicle.all
@@ -26,15 +28,16 @@ class EmergencyVehiclesController < ApplicationController
 
   # PATCH/PUT /emergency_vehicles/1
   def update
-    if @emergency_vehicle.status == "Unassigned"
+    # .incidentid === null
+    # if @emergency_vehicle.status == "Unassigned"
       if @emergency_vehicle.update(emergency_vehicle_params)
         render json: @emergency_vehicle
       else
         render json: @emergency_vehicle.errors, status: :unprocessable_entity
       end
-    else
-      render json: {error: "Emergency Vehicle Cannot Be Assigned to An Incident"}, status: 400
-    end
+    # else
+    #   render json: {error: "Emergency Vehicle Cannot Be Assigned to An Incident"}, status: 400
+    # end
   end
 
   # DELETE /emergency_vehicles/1

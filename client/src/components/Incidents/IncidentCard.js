@@ -7,18 +7,38 @@ import Units from "./Units";
 const IncidentCard = ({ incident, availUnits }) => {
   const { address, city, state, zip } = incident.address; 
   const [toggleAddUnit, setToggleAddUnit] = useState(false);
-  const [assignUnit, setAssignUnit] = useState();
+  const [selectedUnit, setSelectedUnit] = useState("default");
+
+
+  
 
   const handleUnitAssign = (e) => {
     e.preventDefault();
-    console.log(e)
+    if(selectedUnit !== "default"){
+      fetch(`/emergency_vehicles/${selectedUnit}`, {
+        method: 'PATCH',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({incident_id: incident.id, status: "Assigned"})
+      })
+      .then((r) => {
+        if(r.ok){
+          r.json().then((unit) => console.log(unit))
+        }else{
+          r.json().then((error) => console.log(error.error))
+        }
+      })
+    };
+    
     // fetch(`/emergency_vehciles/${e.target.id}`)
   }
   
   
   const availUnitsOptions = availUnits.map((unit) => {
       return(
-        <option id={unit.id} key={unit.id}>{unit.call_sign} - {unit.agency.emergency_service}</option>
+        <option value={unit.id} key={unit.id}>{unit.call_sign} - {unit.agency.emergency_service}</option>
       )
     });
 
@@ -49,12 +69,12 @@ const IncidentCard = ({ incident, availUnits }) => {
           {toggleAddUnit ? (
             <div className="input-field">
               <h5>Available</h5>
-              <form>
-              <select className="browser-default" defaultValue="Select Available Unit">
-                <option disabled>Select Available Unit</option>
+              <form onSubmit={handleUnitAssign}>
+              <select name="" className="browser-default" value={selectedUnit} onChange={(e) => setSelectedUnit(e.target.value)}>
+                <option value="default" disabled>Select a Unit</option>
                 {availUnitsOptions}
               </select>
-              <button className="btn-small" onSubmit={handleUnitAssign}>Assign Unit</button>
+              <button className="btn-small" type="submit">Assign Unit</button>
               </form>
             </div>
           ):(
