@@ -22,6 +22,13 @@ export const updateEvIncident = (vehicle) => {
   }
 }
 
+export const removeEvIncident = (vehicle) => {
+  return {
+    type: "REMOVE_EV_FROM_INCIDENT", 
+    payload: vehicle
+  }
+}
+
 
 
 

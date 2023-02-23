@@ -25,6 +25,16 @@ const incidentReducer = (state=initialState, action) => {
       return updatedIncident
     case "ADD_EV_TO_INCIDENT":
       return state
+    case "REMOVE_EV_FROM_INCIDENT":
+      // console.log(action.payload)
+      const removedEvIncident = state.map((incident) => {
+          const updatedEV = incident.emergency_vehicles.filter((ev) => {
+            return ev.id !== action.payload.id
+          })
+          return {...incident, emergency_vehicles: updatedEV }
+      })
+      console.log(removedEvIncident)
+      return removedEvIncident
     case "DELETE_INCIDENT":
       // debugger;
       return state.filter(user => user.name !== action.payload.name);
