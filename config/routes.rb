@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get '/agency-names', to: 'agencies#only_agency_names'
 
   post '/login', to: 'sessions#create'
+  # post '/evupdate', to 'emergency_vehicles#update_return_incident'
+
   delete '/logout', to: 'sessions#destroy'
 
   

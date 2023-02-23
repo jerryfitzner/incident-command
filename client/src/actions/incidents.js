@@ -15,6 +15,13 @@ export const addIncident = (incident) => {
   }
 }
 
+export const updateEvIncident = (vehicle) => {
+  return {
+    type: "UPDATE_EV_TO_INCIDENT", 
+    payload: vehicle
+  }
+}
+
 
 
 

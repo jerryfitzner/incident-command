@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { updateResource } from "../../actions/resource";
+import { updateEvIncident } from "../../actions/incidents";
 import { useDispatch } from "react-redux";
 
 const Unit = ({ ev }) => {
@@ -13,7 +14,7 @@ const Unit = ({ ev }) => {
     setNewStatus("Arrived")
   }else{
     setNewStatus("Assigned")
-  }},[]);
+  }},[ev]);
 
   console.log(newStatus)
 
@@ -57,12 +58,14 @@ const Unit = ({ ev }) => {
     })
     .then((r) => {
       if(r.ok){
-        r.json().then((ev) => dispatch(updateResource(ev)))
+        r.json().then((ev) => dispatch(updateEvIncident(ev)))
       }else{
         r.json().then((error) => console.log(error.error))
       }
     })
   };
+
+  
 
   const handleRemoveClick = () => {
     setNewStatus("Unassigned");

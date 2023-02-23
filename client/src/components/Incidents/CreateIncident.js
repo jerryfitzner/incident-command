@@ -45,13 +45,13 @@ const CreateIncident = () => {
   }
 
   return(
-    <div className="center">
+    <div className="center-align">
       {showForm ? (
         <>
         <button className="btn" onClick={() => setShowForm(!showForm)}>Close</button>
         <div className="row">
           
-        <form className="col s12 m6" onSubmit={ handleSubmit }>
+        <form className="col s12 m12 l6" onSubmit={ handleSubmit }>
           <div className="row">
             <div className="input-field">
               <input placeholder="Name" name="name" type="text" className="validate" value={ form.name } onChange={ handleChange }/>

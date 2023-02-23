@@ -10,6 +10,8 @@ const Incidents = () => {
     return(resource.active === true && resource.status === "Unassigned")
   })
 
+  
+
   // console.log(availableUnits)
   const dispatch = useDispatch();
 

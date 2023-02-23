@@ -40,6 +40,15 @@ class EmergencyVehiclesController < ApplicationController
     # end
   end
 
+  # def update_return_incident
+  #   if @emergency_vehicle.update(emergency_vehicle_params)
+  #     binding.pry
+  #     render json: @emergency_vehicle.incident
+  #   else
+  #     render json: @emergency_vehicle.errors, status: :unprocessable_entity
+  #   end
+  # end
+
   # DELETE /emergency_vehicles/1
   def destroy
     @emergency_vehicle.destroy
