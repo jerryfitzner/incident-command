@@ -10,6 +10,7 @@ const IncidentCard = ({ incident, availUnits }) => {
   const [toggleAddUnit, setToggleAddUnit] = useState(false);
   const [selectedUnit, setSelectedUnit] = useState("default");
   const [showForm, setShowForm] = useState(false);
+  const [errors, setErrors] = useState([]);
   const [addressForm, setAddressForm] = useState({
     address: '',
     city: '',
@@ -86,9 +87,10 @@ const IncidentCard = ({ incident, availUnits }) => {
         r.json().then((incident) =>{ 
           dispatch(updateIncident((incident)));
           showAddressForm();
+          setErrors([]);
         })
       }else{
-        r.json().then((error) => errorHandler(error))
+        r.json().then((error) => { setErrors(error.errors)})
       }
     })
   };
@@ -101,11 +103,23 @@ const IncidentCard = ({ incident, availUnits }) => {
           <input type="text" placeholder="City" name="city" value={addressForm.city} onChange={ handleChange }></input>
           <input type="text" placeholder="State" name="state" value={addressForm.state} onChange={ handleChange }></input>
           <input type="text" placeholder="Zip" name="zip" value={addressForm.zip} onChange={ handleChange }></input>
+          {(
+            <ul style={{ color: "red" }}>
+              {Object.keys(errors).map((key) => {
+              const errorKey = key
+              const errorString = errors[key].toString();
+              return(
+                <li key={key}>{errorKey} {errorString}</li>
+                )})}
+            </ul>
+          )}
           <button type="submit" className="btn">Save</button><button onClick={showAddressForm} className="btn" >Close</button>
         </form>
       )
     }else{
       // const { address, city, state, zip } = incident.address;
+      // Object.keys(errors).forEach((key, index) => {errors[key]})
+      // errors['address'].toString()
       // setAddressForm({
       //     address: incident.address.address,
       //     city: incident.address.city,
@@ -119,12 +133,23 @@ const IncidentCard = ({ incident, availUnits }) => {
           <input type="text" placeholder="City" name="city" value={addressForm.city} onChange={ handleChange }></input>
           <input type="text" placeholder="State" name="state" value={addressForm.state} onChange={ handleChange }></input>
           <input type="text" placeholder="Zip" name="zip" value={addressForm.zip} onChange={ handleChange }></input>
+          {(
+            <ul style={{ color: "red" }}>
+              {Object.keys(errors).map((key) => {
+              const errorKey = key
+              const errorString = errors[key].toString();
+              return(
+                <li key={key}>{errorKey} {errorString}</li>
+                )})}
+            </ul>
+          )}
           <button type="submit" className="btn">Update</button><button onClick={showAddressForm} className="btn" >Close</button>
         </form>
       )
     }
   }
 
+  // console.log(errors)
   const showAddressForm = () => setShowForm(!showForm);
 
 
@@ -168,9 +193,7 @@ const IncidentCard = ({ incident, availUnits }) => {
   }
 
   const errorHandler = (error) => {
-    error.array.forEach(element => {
-      console.log(element)
-    })
+    
     return(
       <div>
 
