@@ -14,3 +14,10 @@ export const updateResource = (resource) => {
     payload: resource
   }
 }
+
+export const updateDeleteIncident = (resource) => {
+  return {
+    type: "UPDATE_DELETE",
+    payload: resource
+  }
+}

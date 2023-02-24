@@ -22,7 +22,7 @@ class EmergencyVehiclesController < ApplicationController
     if @emergency_vehicle.save
       render json: @emergency_vehicle, status: :created, location: @emergency_vehicle
     else
-      render json: @emergency_vehicle.errors, status: :unprocessable_entity
+      render json: {errors: @emergency_vehicle.errors}, status: :unprocessable_entity
     end
   end
 
@@ -33,7 +33,7 @@ class EmergencyVehiclesController < ApplicationController
       if @emergency_vehicle.update(emergency_vehicle_params)
         render json: @emergency_vehicle
       else
-        render json: @emergency_vehicle.errors, status: :unprocessable_entity
+        render json: {errors: @emergency_vehicle.errors}, status: :unprocessable_entity
       end
     # else
     #   render json: {error: "Emergency Vehicle Cannot Be Assigned to An Incident"}, status: 400

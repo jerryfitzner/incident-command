@@ -19,15 +19,15 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    # binding.pry
+    binding.pry
     # CREATE A SESSION
-    user = User.new(user_params)
+    user = User.create(user_params)
 
-    if user.save
+    if user.valid?
       session[:user_id] = user.id
       render json: user, status: :created, location: user
     else
-      render json: user.errors, status: :unprocessable_entity
+      render json: {errors: user.errors}, status: :unprocessable_entity
     end
   end
 
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
       if user.update(user_params)
         render json: user
       else
-        render json: user.errors, status: :unprocessable_entity
+        render json: {errors: user.errors}, status: :unprocessable_entity
       end
     else 
       render json: { error: "You must be an admin to change the status of another user" }, status: :unauthorized
@@ -60,12 +60,12 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :password_digest, :name, :position, :agency_id, :admin)
+      params.require(:user).permit(:username, :password, :password_confirmation, :name, :position, :agency_id, :admin)
     end
 
-    def nonadmin_user_params
-      params.require(:user).permit(:username, :password_digest, :name, :position, :agency)
-    end
+    # def nonadmin_user_params
+    #   params.require(:user).permit(:username, :password_digest, :name, :position, :agency)
+    # end
 
     #Make sure user is authorized
     def authorized

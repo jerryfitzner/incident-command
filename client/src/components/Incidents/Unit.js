@@ -92,7 +92,7 @@ const Unit = ({ ev }) => {
     <td>{vehicleImage()}</td>
     <td>{ev.call_sign}</td>
     <td onClick={handleClick} className={vehicleStatus()}>{ev.status}</td>
-    <td><button className="btn-small" onClick={handleRemoveClick}>X</button></td>
+    <td><button className="btn-small red lighten-3" onClick={handleRemoveClick}>X</button></td>
   </tr>
   )
 }

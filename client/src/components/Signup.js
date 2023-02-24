@@ -7,6 +7,7 @@ const beginningState = {
   position: '',
   agency_id: 0,
   username: '',
+  admin: false,
   password: '',
   password_confirmation: ''
 };
@@ -21,6 +22,10 @@ const Signup = () => {
     setSignupForm({...signupForm, [e.target.id]: e.target.value})
   };
 
+  const handleNumChange = (e) => {
+    setSignupForm({...signupForm, [e.target.id]: parseInt(e.target.value)})
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch('/users', {
@@ -29,7 +34,7 @@ const Signup = () => {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify(signupForm)
+      body: JSON.stringify({user: signupForm})
     })
     .then((r) => {
       if(r.ok){
@@ -79,7 +84,7 @@ const Signup = () => {
           </div>
           <div className="row">
             <div className="input-field">
-              <select id="agency_id" className="browser-default" defaultValue="Please Select an Agency" onChange={ handleChange }>
+              <select id="agency_id" className="browser-default" defaultValue="Please Select an Agency" onChange={ handleNumChange }>
                 <option disabled>Please Select an Agency</option>
                 {agencyList()}
               </select>

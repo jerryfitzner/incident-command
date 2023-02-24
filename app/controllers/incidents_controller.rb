@@ -15,14 +15,17 @@ class IncidentsController < ApplicationController
 
   # POST /incidents
   def create
-    binding.pry
-    address = Address.create(address_params)
     @incident = Incident.new(incident_params)
-
+    # address = Address.create(address_params)
     if @incident.save
       render json: @incident, status: :created, location: @incident
+      # if address.valid?
+      # else
+      #   render json: @incident, status: :created, location: @incident
+      #   render json: address.errors, status: :unprocessable_entity
+      # end
     else
-      render json: @incident.errors, status: :unprocessable_entity
+      render json: {errors: @incident.errors}, status: :unprocessable_entity
     end
   end
 
@@ -31,13 +34,18 @@ class IncidentsController < ApplicationController
     if @incident.update(incident_params)
       render json: @incident
     else
-      render json: @incident.errors, status: :unprocessable_entity
+      render json: {errors: @incident.errors}, status: :unprocessable_entity
     end
   end
 
   # DELETE /incidents/1
   def destroy
-    @incident.destroy
+    # binding.pry
+    if @incident.emergency_vehicles == []
+      @incident.destroy
+    else
+      render json: {error: "Please clear all units"}, status: 400
+    end
   end
 
   private
@@ -48,7 +56,7 @@ class IncidentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def incident_params
-      params.require(:incident).permit(:type, :severity)
+      params.require(:incident).permit(:name, :severity)
     end
 
     def address_params

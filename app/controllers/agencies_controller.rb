@@ -27,7 +27,7 @@ class AgenciesController < ApplicationController
     if @agency.save
       render json: @agency, status: :created, location: @agency
     else
-      render json: @agency.errors, status: :unprocessable_entity
+      render json: {errors: @agency.errors}, status: :unprocessable_entity
     end
   end
 
@@ -36,7 +36,7 @@ class AgenciesController < ApplicationController
     if @agency.update(agency_params)
       render json: @agency
     else
-      render json: @agency.errors, status: :unprocessable_entity
+      render json: {errors: @agency.errors}, status: :unprocessable_entity
     end
   end
 
