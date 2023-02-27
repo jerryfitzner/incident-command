@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: incident_command_production
-  username: incident_command
-  password: <%= ENV["INCIDENT_COMMAND_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
