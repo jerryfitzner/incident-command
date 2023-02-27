@@ -1,7 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import { deleteUser } from "../actions/user";
+
 
 
 const Navbar = () => {
@@ -24,7 +25,10 @@ const Navbar = () => {
     <div>
       <nav>
         <div className="nav-wrapper">
-          <NavLink to="/">Logo</NavLink>
+          <div className="brand-logo">
+            <NavLink to="/"><img src={"../siren.png"} width="50" /></NavLink>
+          </div>
+          <Link data-target="nav-mobile" className="sidenav-trigger"><i className="material-icons">menu</i></Link>
           {user ? (
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li><NavLink to="/">Home</NavLink></li>

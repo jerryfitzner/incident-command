@@ -1,14 +1,16 @@
 import { addUser } from "../actions/user";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 
 const Login = () => {
   const [userName, setUserName] = useState(""); 
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState([]);
 
   const dispatch = useDispatch();
-  const user = useSelector((store) => (store.user));
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,11 +28,13 @@ const Login = () => {
       if(r.ok){
         r.json().then((user) => {
           dispatch(addUser(user));
+          navigate("/");
           setUserName('');
           setPassword('');
+          setErrors([])
         })
       }else{
-        r.json().then(error => console.log(error))
+        r.json().then(error => setErrors(error))
       }
     });
   }
@@ -52,6 +56,16 @@ const Login = () => {
               {/* <label >First Name</label> */}
             </div>
           </div>
+          {(
+            <ul style={{ color: "red" }}>
+              {Object.keys(errors).map((key) => {
+              const errorKey = key
+              const errorString = errors[key].toString();
+              return(
+                <li key={key}>{errorKey} {errorString}</li>
+                )})}
+            </ul>
+          )}
           <button className="btn waves-effect waves-light" type="submit" name="submit">Submit
             <i className="material-icons right">send</i>
           </button>

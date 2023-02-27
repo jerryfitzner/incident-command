@@ -7,17 +7,18 @@ const beginningFormState = {
   severity: 'High'
 };
 
-const beginningAddressState = {
-  address: '',
-  city: '',
-  state: '',
-  zip: ''
-};
+// const beginningAddressState = {
+//   address: '',
+//   city: '',
+//   state: '',
+//   zip: ''
+// };
 
 const CreateIncident = () => {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(beginningFormState);
-  const [address, setAddress] = useState(beginningAddressState);
+  const [errors, setErrors] = useState([]);
+  // const [address, setAddress] = useState(beginningAddressState);
 
   const dispatch = useDispatch();
 
@@ -37,10 +38,11 @@ const CreateIncident = () => {
         r.json().then((incident) => {
           dispatch(addIncident(incident)); 
           setShowForm(false);
-          setForm(beginningFormState)
+          setForm(beginningFormState);
+          setErrors([]);
         })
       }else{
-        r.json().then((error) => console.log(error))
+        r.json().then((error) => setErrors(error.errors))
       }
     })
   }
@@ -69,7 +71,7 @@ const CreateIncident = () => {
           </div>
           <div className="row">
             <div className="input-field">
-              <select className="browser-default" value={form.severity} name="severity" value={form.severity} onChange={handleChange}>
+              <select className="browser-default" value={form.severity} name="severity" onChange={handleChange}>
                 <option disabled>Severity</option>
                 <option name="severity" value="High">High</option>
                 <option name="severity" value="Medium">Medium</option>
@@ -77,7 +79,16 @@ const CreateIncident = () => {
               </select>
             </div>
           </div>
-          
+          {(
+            <ul style={{ color: "red" }}>
+              {Object.keys(errors).map((key) => {
+              const errorKey = key
+              const errorString = errors[key].toString();
+              return(
+                <li key={key}>{errorKey} {errorString}</li>
+                )})}
+            </ul>
+          )}
           <button className="btn waves-effect waves-light" type="submit" name="submit">Create Incident
             <i className="material-icons right">send</i>
           </button>

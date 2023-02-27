@@ -17,7 +17,7 @@ const Resources = () => {
 
   useEffect(() => {
     dispatch(loadResources())
-  }, []);
+  }, [dispatch]);
 
   const resources = useSelector((store) => store.resources);
 
@@ -42,6 +42,7 @@ const Resources = () => {
       }else{
         otherResources.push(resource);
       }
+      return(<></>);
     });
     setFire(fireResources);
     setPolice(policeResources);

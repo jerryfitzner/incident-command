@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { addUser } from "../actions/user";
 import { useDispatch } from "react-redux";
 
@@ -15,8 +16,10 @@ const beginningState = {
 const Signup = () => {
   const [signupForm, setSignupForm] = useState(beginningState);
   const [agencies, setAgencies] = useState([]);
+  const [errors, setErrors] = useState([]);
   
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setSignupForm({...signupForm, [e.target.id]: e.target.value})
@@ -38,12 +41,15 @@ const Signup = () => {
     })
     .then((r) => {
       if(r.ok){
-        r.json().then((user) => dispatch(addUser(user)))
+        r.json().then((user) => {
+          dispatch(addUser(user)); 
+          navigate("/");
+          setErrors([])
+        })
       }else{
-        r.json().then((error) => console.log(error))
+        r.json().then((error) => setErrors(error.errors))
       }
     })
-    console.log(signupForm)
   };
 
   useEffect(() => {
@@ -108,6 +114,16 @@ const Signup = () => {
               {/* <label >First Name</label> */}
             </div>
           </div>
+          {(
+            <ul style={{ color: "red" }}>
+              {Object.keys(errors).map((key) => {
+              const errorKey = key
+              const errorString = errors[key].toString();
+              return(
+                <li key={key}>{errorKey} {errorString}</li>
+                )})}
+            </ul>
+          )}
           <button className="btn waves-effect waves-light" type="submit" name="submit">Create Account
             <i className="material-icons right">send</i>
           </button>

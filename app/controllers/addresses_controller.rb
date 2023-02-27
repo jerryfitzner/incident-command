@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
   before_action :set_address, only: %i[ show update destroy ]
+  # skip_before_action :must_login, only: [:destroy]
 
   # GET /addresses
   def index

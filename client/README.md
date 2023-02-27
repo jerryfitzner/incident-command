@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Incident Command App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Incident Command app is an app which allows emergency personnel to keep track of incidents in their city and resources allocated to those incidents. 
 
-## Available Scripts
 
-In the project directory, you can run:
+## Installation Insctructions
 
-### `npm start`
+- Fork and clone the git hub repository, if you have not done so yet.
+- Back End:
+  - Open the terminal and run `bundle install` to install the gems. 
+  - Next run `rails db:seed` to seed the database with data. 
+  - Lastly, run `rails s` to start the API server.
+- Open the Front End next:
+  - Open the REACT App in your browser by typing `npm start --prefix client` in the terminal.
+- The app should now be live in your browser!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Using the Student Fundraising App
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+First, you must log into the application or create a new profile. You can use the username of `FredFlinstone` and password `password` if you seeded the data from the database.  
 
-### `npm test`
+### 1) Home Page
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- The Home Page shows us all the incidents currently going on.
+- We can create a new incident by clicking `Create Incident`. 
+- Each Incident: 
+  - We can update the address for an incident by clicking on the address. 
+  - We can assign an emergency unit to the incident by clicking assign unit. 
+    - Only units which are not attached to other incidents are available to be assigned to an incident.
+    - Only units which are `online` via the resources page are available to be assigned to an incident. 
+  - A unit's `status` can be updated to `assigned`, `enroute`, or `arrived`, by clicking the current status of the unit.
+  - A unit can be deleted by clicking its delete button. 
+  - An incident can be deleted if there are no emergency units attached to it. 
+- The home page will soon display a map of all the incidents and feature to sort the incidents.  
 
-### `npm run build`
+### 2) Personnel
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- The Personnel page shows all the users who have signed up for accounts. 
+- If the current user is an administrator, they can make other users administrators by clicking the administrator button. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 3) Resources
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- All resources are listed on this page.
+- A user can take a resource `online` so it can be assigned to an incident, or they can take a resource `offline` if it should not be available at all. 
+- Only resources not assigned to a call can be taken offline. 
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### More features to come in the near future.

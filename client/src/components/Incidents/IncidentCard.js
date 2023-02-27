@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from "react";
+import React, {useState } from "react";
 import { loadResources, updateResource } from "../../actions/resource";
 import { addEvIncident, updateIncident } from "../../actions/incidents";
 import { deleteIncident } from "../../actions/incidents";
@@ -11,6 +11,8 @@ const IncidentCard = ({ incident, availUnits }) => {
   const [selectedUnit, setSelectedUnit] = useState("default");
   const [showForm, setShowForm] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [unitErrors, setUnitErrors] = useState([]);
+  const [deleteErrors, setDeleteErrors] = useState([]);
   const [addressForm, setAddressForm] = useState({
     address: '',
     city: '',
@@ -20,6 +22,7 @@ const IncidentCard = ({ incident, availUnits }) => {
   });
 
   const dispatch = useDispatch();
+  const showAddressForm = () => setShowForm(!showForm);
 
   const handleUnitAssign = (e) => {
     e.preventDefault();
@@ -37,10 +40,11 @@ const IncidentCard = ({ incident, availUnits }) => {
           r.json().then((unit) => {
             dispatch(updateResource(unit));
             dispatch(addEvIncident(unit));
-            setToggleAddUnit(!toggleAddUnit)
+            setToggleAddUnit(!toggleAddUnit);
+            setUnitErrors([])
           })
         }else{
-          r.json().then((error) => console.log(error.error))
+          r.json().then((error) => setUnitErrors(error.error))
         }
       })
     };
@@ -149,8 +153,7 @@ const IncidentCard = ({ incident, availUnits }) => {
     }
   }
 
-  // console.log(errors)
-  const showAddressForm = () => setShowForm(!showForm);
+  
 
 
   const isAddress = () => {
@@ -185,21 +188,13 @@ const IncidentCard = ({ incident, availUnits }) => {
     .then((r) => {
       if(r.ok){
         dispatch(deleteIncident(incident.id));
-        dispatch(loadResources())
+        dispatch(loadResources());
+        setDeleteErrors([])
       }else{
-        r.json().then((error) => console.log(error))
+        r.json().then((error) => setDeleteErrors(error))
       }
     })
   }
-
-  const errorHandler = (error) => {
-    
-    return(
-      <div>
-
-      </div>
-    )
-  };
   
   const availUnitsOptions = availUnits.map((unit) => {
       return(
@@ -212,6 +207,15 @@ const IncidentCard = ({ incident, availUnits }) => {
     <div className="col s12 m12 l6">
       <div className="card hoverable">
           <div><button onClick={incidentDelete} className="btn-floating right waves-effect waves-light red lighten-3"><i className="material-icons right">close</i></button></div>
+          {(
+            <ul style={{ color: "red" }}>
+              {Object.keys(deleteErrors).map((key) => {
+              const errorString = deleteErrors[key].toString();
+              return(
+                <li key={key}>{errorString} before deleting incident.</li>
+                )})}
+            </ul>
+          )}
         <div className="card-content">
           <div className="center-align">
             <h5 className="card-title">{incident.name}</h5>
@@ -239,6 +243,16 @@ const IncidentCard = ({ incident, availUnits }) => {
                 <option value="default" disabled>Select a Unit</option>
                 {availUnitsOptions}
               </select>
+               {(
+                  <ul style={{ color: "red" }}>
+                    {Object.keys(unitErrors).map((key) => {
+                    const errorKey = key
+                    const errorString = unitErrors[key].toString();
+                    return(
+                      <li key={key}>{errorKey} {errorString}</li>
+                      )})}
+                  </ul>
+                )}
               <button className="btn-small" type="submit">Assign Unit</button>
               </form>
             </div>

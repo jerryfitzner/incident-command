@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    binding.pry
+    # binding.pry
     # CREATE A SESSION
     user = User.create(user_params)
 

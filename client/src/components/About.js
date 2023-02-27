@@ -2,18 +2,16 @@ import React from "react";
 
 const About = () => {
   return(
-  <>
-    <h1>About</h1>
-    <div className="input-field">
-    <select >
-      <option value="">Choose your option</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
-    </select>
-    <label>Materialize Disabled</label>
+  <div>
+    <div>
+      <h1>About</h1>
+    </div>
+    <div>
+      <p>This app is designed for emergency commanders, and personnel, to keep track of emergency incidents and resources allocated to those incidents. </p>
+      <p>Please sign-in to utlize this app.</p>
+      <p>To become an administrator, you must have another administrator change your status on their personnel page.</p>
+    </div>
   </div>
-  </>
   )
 };
 
