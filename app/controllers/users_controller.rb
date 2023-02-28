@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     user = User.find_by(id: params[:id])
     # binding.pry
 
-    if admin?
+    if admin? && user.id != current_user.id
       if user.update(user_params)
         render json: user
       else
