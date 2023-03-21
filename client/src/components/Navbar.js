@@ -30,7 +30,7 @@ const Navbar = () => {
           </div>
           <Link data-target="nav-mobile" className="sidenav-trigger"><i className="material-icons">menu</i></Link>
           {user ? (
-          <ul id="nav-mobile" className="right hide-on-med-and-down">
+          <ul id="nav-mobile" className="right ">
             <li><NavLink to="/">Home</NavLink></li>
             <li><NavLink to="/personnel">Personnel</NavLink></li>
             <li><NavLink to="/resources">Resources</NavLink></li>
